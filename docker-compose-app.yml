@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+
+  centric-api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8100:8100"
+    restart: unless-stopped
+    container_name: centric-api-server
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/products"
+      SPRING_DATASOURCE_USERNAME: "centric"
+      SPRING_DATASOURCE_PASSWORD: "centric"
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    container_name: postgres
+    environment:
+      POSTGRES_DB: products
+      POSTGRES_PASSWORD: centric
+      POSTGRES_USER: centric
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+volumes:
+  postgres-data:

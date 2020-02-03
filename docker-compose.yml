@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - "5436:5432"
+    restart: always
+    container_name: postgres_centric
+    environment:
+      POSTGRES_DB: products
+      POSTGRES_PASSWORD: centric
+      POSTGRES_USER: centric
+    expose:
+      - 5436
